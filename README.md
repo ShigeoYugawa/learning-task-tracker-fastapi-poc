@@ -1,7 +1,7 @@
-# learning-task-tracker-fastapi-poc
+# Learning Task Tracker - FastAPI PoC
 
-FastAPIベースの学習タスク管理アプリのPoC（概念実証）です。  
-このプロジェクトは、Django版PoC（https://github.com/ShigeoYugawa/learning-task-tracker）を踏まえて、API分離・アーキテクチャ志向の構成へと段階的に再設計していく学習用プロジェクトです。
+FastAPIベースの学習タスク管理アプリです。  
+このプロジェクトは、Django版PoC（[learning-task-tracker](https://github.com/ShigeoYugawa/learning-task-tracker)）を踏まえ、**API分離・アーキテクチャ志向**の構成へと段階的に再設計していく実験的プロジェクトです。
 
 ---
 
@@ -17,9 +17,9 @@ FastAPIベースの学習タスク管理アプリのPoC（概念実証）です�
 ├── requirements.txt
 └── ...
 
-- `app/main.py` に簡易なFastAPIアプリケーションを暫定的に実装。
-- POSTリクエストにのみ対応しており、現在はブラウザ上でアクセスしても何も表示されません。
-- 動作確認には Swagger UI（インタラクティブAPIドキュメント）を使用します。
+- `app/main.py` にエントリーポイントを暫定実装。
+- 現時点では POST のみ対応しており、**Swagger UI での操作が主な確認手段**です。
+- ルーティングと処理ロジックが同居しており、SRP（単一責任の原則）には未対応です。
 
 ---
 
@@ -52,7 +52,7 @@ uvicorn app.main:app --reload
 - [ ] `di/`：依存性注入のインターフェイスと構成
 - [ ] 認証／認可（JWTやOAuth2）
 
-※ 本構成は「クリーンアーキテクチャ」や「ヘキサゴナルアーキテクチャ」などの原則を意識しながら、段階的に現実的な構成へと近づけていく方針です。
+※ 「クリーンアーキテクチャ」や「ヘキサゴナルアーキテクチャ」などの原則を意識しつつ、現実的な段階的移行を目指します。
 
 ---
 
