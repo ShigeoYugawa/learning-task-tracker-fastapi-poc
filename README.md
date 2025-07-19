@@ -1,7 +1,7 @@
-# learning-task-tracker-fastapi
+# learning-task-tracker-fastapi-poc
 
 FastAPIベースの学習タスク管理アプリです。  
-このリポジトリは、Django版PoC（[learning-task-tracker](https://github.com/ShigeoYugawa/learning-task-tracker-fastapi)）を踏まえ、**API分離・アーキテクチャ志向の構成**を目指してバックエンドを段階的に再構築していくプロジェクトです。
+このリポジトリは、Django版PoC（[learning-task-tracker](https://github.com/ShigeoYugawa/learning-task-tracker)）を踏まえ、**API分離・アーキテクチャ志向の構成**を目指してバックエンドを段階的に再構築していくプロジェクトです。
 
 ---
 
