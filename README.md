@@ -1,12 +1,13 @@
 # Learning Task Tracker - FastAPI PoC
 
 FastAPIベースの学習タスク管理アプリです。  
-このプロジェクトは、Django版PoC（[learning-task-tracker](https://github.com/ShigeoYugawa/learning-task-tracker)）を踏まえ、**API分離・アーキテクチャ志向**の構成へと段階的に再設計していく実験的プロジェクトです。
+このプロジェクトは、Django版PoC（[GitHub リポジトリ](https://github.com/ShigeoYugawa/learning-task-tracker)）を踏まえ、**API分離・アーキテクチャ志向**の構成へと段階的に再設計していく実験的プロジェクトです。
 
 ---
 
 ## 📁 プロジェクト構成（暫定）
 
+```
 .
 ├── app/
 │   ├── main.py        # FastAPI インスタンスのエントリーポイント（POST処理あり）
@@ -16,6 +17,7 @@ FastAPIベースの学習タスク管理アプリです。
 ├── README.md
 ├── requirements.txt
 └── ...
+```
 
 - `app/main.py` にエントリーポイントを暫定実装。
 - 現時点では POST のみ対応しており、**Swagger UI での操作が主な確認手段**です。
@@ -27,6 +29,7 @@ FastAPIベースの学習タスク管理アプリです。
 
 以下の手順でローカルサーバーを起動できます：
 
+```bash
 # 仮想環境を有効化（例）
 source .venv/bin/activate
 
@@ -35,6 +38,7 @@ pip install -r requirements.txt
 
 # 開発サーバー起動
 uvicorn app.main:app --reload
+```
 
 - Swagger UI: http://localhost:8000/docs  
 - Redoc: http://localhost:8000/redoc
@@ -52,7 +56,7 @@ uvicorn app.main:app --reload
 - [ ] `di/`：依存性注入のインターフェイスと構成
 - [ ] 認証／認可（JWTやOAuth2）
 
-※ 「クリーンアーキテクチャ」や「ヘキサゴナルアーキテクチャ」などの原則を意識しつつ、現実的な段階的移行を目指します。
+※「クリーンアーキテクチャ」や「ヘキサゴナルアーキテクチャ」などの原則を意識しつつ、現実的な段階的移行を目指します。
 
 ---
 
@@ -65,7 +69,7 @@ uvicorn app.main:app --reload
 
 ## 📚 参考リンク
 
-- FastAPI公式ドキュメント: https://fastapi.tiangolo.com/
-- Pydantic: https://docs.pydantic.dev/
-- Uvicorn: https://www.uvicorn.org/
-- Django版リポジトリ（参考）: https://github.com/ShigeoYugawa/learning-task-tracker
+- [FastAPI公式ドキュメント](https://fastapi.tiangolo.com/)
+- [Pydantic](https://docs.pydantic.dev/)
+- [Uvicorn](https://www.uvicorn.org/)
+- [Django版リポジトリ（参考）](https://github.com/ShigeoYugawa/learning-task-tracker)
