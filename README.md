@@ -11,6 +11,7 @@ FastAPIベースの学習タスク管理アプリです。
 .
 ├── app/
 │   ├── main.py        # FastAPI インスタンスのエントリーポイント（POST処理あり）
+│   ├── task.py        # Pydanticモデル（Schema定義）を分離
 │   ├── routers/       # 今後ルーティングモジュールを格納予定
 │   └── ...            # その他の構成要素（予定）
 ├── .venv/             # 仮想環境（環境により異なる）
@@ -20,6 +21,7 @@ FastAPIベースの学習タスク管理アプリです。
 ```
 
 - `app/main.py` にエントリーポイントを暫定実装。
+- `app/task.py` に Pydantic モデル（Schema）を分離。
 - 現時点では POST のみ対応しており、**Swagger UI での操作が主な確認手段**です。
 - ルーティングと処理ロジックが同居しており、SRP（単一責任の原則）には未対応です。
 
@@ -49,8 +51,9 @@ uvicorn app.main:app --reload
 
 このプロジェクトはPoCとして、以下の構造への発展を想定しています：
 
+- [x] `task.py`：スキーマ（Pydanticモデル）の分離
 - [ ] `routers/`：APIルーティングモジュールの分離
-- [ ] `schemas/`：Pydanticモデルによる入出力定義
+- [ ] `schemas/`：Pydanticモデルによる入出力定義の整理
 - [ ] `services/`：ビジネスロジックの抽象化
 - [ ] `repositories/`：DB操作の責任を分離（例：SQLAlchemyやDBライブラリの導入）
 - [ ] `di/`：依存性注入のインターフェイスと構成
