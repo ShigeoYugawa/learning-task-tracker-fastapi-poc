@@ -1,42 +1,46 @@
 # app/routers/task.py
 
+# FastAPI のルーターと依存性注入のためのユーティリティ
 from fastapi import APIRouter, Depends
-from app.schemas.task import TaskCreate, TaskRead
+# タスク作成用スキーマ（入力）およびレスポンススキーマ（出力）
+from app.schemas.task import TaskCreate, TaskResponse
+# タスクに関するビジネスロジックを担当するサービス層
 from app.services.task_service import TaskService
+# 非同期DBセッションを取得するための依存関数
 from app.db.session import get_db
 from sqlalchemy.ext.asyncio import AsyncSession
 
-# --- ルーター設定 ---
-# このモジュールでは /tasks エンドポイント以下のタスク操作ルートを定義する。
-# prefix="/tasks" により、すべてのルートは /tasks から始まる。
-# tags=["Tasks"] により、自動生成されるAPIドキュメントで「Tasks」というセクションにまとめられる。
+# --------------------------------------------------------
+# /tasks に関するエンドポイントをまとめるルーター設定
+# - prefix="/tasks" により全てのルートは /tasks から始まる
+# - tags=["Tasks"] は OpenAPI ドキュメントのカテゴリ分けに使用
+# --------------------------------------------------------
 router = APIRouter(prefix="/tasks", tags=["Tasks"])
 
-# POSTメソッドでタスクを作成するエンドポイント。
-# リクエストボディで受け取るデータは `TaskCreate`（Pydanticモデル）によりバリデーションされる。
-# レスポンスとして `TaskRead` を返し、作成されたタスクの情報を提供する。
-@router.post("/", response_model=TaskRead)
-async def create_task(
 
-    # リクエストボディから渡されるタスク作成用データ（title, description, done）
+# --------------------------------------------------------
+# タスク作成エンドポイント
+# - HTTPメソッド: POST
+# - パス: /tasks/
+# - 入力: TaskCreate（title, description, done）
+# - 出力: TaskResponse（message と作成されたタスク情報）
+# --------------------------------------------------------
+
+@router.post("/", response_model=TaskResponse)
+async def create_task(
+    # クライアントから送信されるタスクデータ
     task: TaskCreate,
-    # DI（依存性注入）により取得される非同期DBセッション        
+    # 非同期DBセッション（DIにより注入）
     db: AsyncSession = Depends(get_db),
 ):
     """
-    新しいタスクを作成するエンドポイント。
-
-    - `POST /tasks/` に対するリクエストを処理
-    - 入力: TaskCreate（title, description, done）
-    - 出力: TaskRead（id, title, description, done）
+    タスクを新規作成します。
 
     処理の流れ:
-    1. DBセッションを注入（Depends(get_db)）
-    2. TaskServiceのインスタンスを生成
-    3. create_task メソッドを呼び出してDBにタスクを保存
-    4. 作成されたタスクの情報を TaskRead モデルに変換して返却
+    1. get_db() により非同期DBセッションを取得
+    2. TaskService の create_task() を呼び出してビジネスロジックを実行
+    3. 成功時には TaskResponse を返す
     """
-    # タスク操作用のサービスクラスを生成し、ビジネスロジックを委譲
     service = TaskService(db)
-    # サービス層にタスク作成処理を委譲し、結果を返却
     return await service.create_task(task)
+
