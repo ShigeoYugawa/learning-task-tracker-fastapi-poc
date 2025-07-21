@@ -37,18 +37,18 @@ learning-task-tracker-fastapi-poc/
 🚀 起動方法（ローカル開発）
 
 1. 仮想環境を作成
-
+<pre><code>
 python -m venv .venv
 source .venv/bin/activate  # Windowsでは .venv\Scripts\activate
-
+</code></pre>
 2. 依存ライブラリをインストール
-
+<pre><code>
 pip install -r requirements.txt
-
+</code></pre>
 3. アプリケーションの起動
-
+<pre><code>
 uvicorn main:app --reload
-
+</code></pre>
 4. Swagger UI にアクセス
 
 http://127.0.0.1:8000/docs
