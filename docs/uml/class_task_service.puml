@@ -1,0 +1,55 @@
+@startuml
+
+package app {
+
+  package main {
+    class MainApp {
+      +FastAPI instance
+      +include_router()
+    }
+  }
+
+  package routers {
+    class TaskRouter {
+      +@router.post("/tasks/")
+    }
+  }
+
+  package services {
+    class TaskService {
+      +create_task()
+    }
+  }
+
+  package schemas {
+    class TaskCreate {
+      +title: str
+      +description: str
+      +done: bool
+    }
+
+    class TaskRead {
+      +id: UUID
+      +title: str
+      +description: str
+      +done: Optional[bool]
+    }
+  }
+
+  package db.models {
+    class Task {
+      +id: str
+      +title: str
+      +description: str
+      +done: bool
+    }
+  }
+}
+
+MainApp --> TaskRouter : include_router
+TaskRouter --> TaskService : uses
+TaskService --> Task : ORM model
+TaskService --> TaskCreate : input
+TaskService --> TaskRead : output
+
+@enduml

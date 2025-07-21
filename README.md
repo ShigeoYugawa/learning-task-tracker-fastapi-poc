@@ -1,78 +1,83 @@
 # Learning Task Tracker - FastAPI PoC
 
-FastAPIベースの学習タスク管理アプリです。  
-このプロジェクトは、Django版PoC（[GitHub リポジトリ](https://github.com/ShigeoYugawa/learning-task-tracker)）を踏まえ、**API分離・アーキテクチャ志向**の構成へと段階的に再設計していく実験的プロジェクトです。
+このリポジトリは、**学習タスク管理アプリケーション**の概念実証（PoC）として構築された FastAPI ベースの Web API プロジェクトです。シンプルな構成ながらも、将来的な拡張性と保守性を意識して設計されています。
 
 ---
 
-## 📁 プロジェクト構成（暫定）
+✅ 主な機能
 
-```
-.
+- 学習タスク（title / description / done）のCRUD API
+- SQLiteによる軽量なローカルDB管理（SQLAlchemy）
+- FastAPI + Pydantic による型安全な実装
+- OpenAPI（Swagger）による自動ドキュメント生成
+- 最小構成によるPoC（Proof of Concept）
+
+---
+
+🗂️ ディレクトリ構成（抜粋）
+<pre><code>
+learning-task-tracker-fastapi-poc/
 ├── app/
-│   ├── main.py        # FastAPI インスタンスのエントリーポイント（POST処理あり）
-│   ├── task.py        # Pydanticモデル（Schema定義）を分離
-│   ├── routers/       # 今後ルーティングモジュールを格納予定
-│   └── ...            # その他の構成要素（予定）
-├── .venv/             # 仮想環境（環境により異なる）
-├── README.md
+│   ├── models/              # SQLAlchemy ORMモデル
+│   ├── schemas/             # Pydanticスキーマ
+│   ├── repositories/        # データアクセス層
+│   ├── services/            # ビジネスロジック層
+│   ├── routers/             # FastAPIルーティング
+│   ├── core/
+│   │   └── config.py        # 設定管理（環境変数など）
+│   └── __init__.py
+├── main.py                  # アプリケーションエントリーポイント
 ├── requirements.txt
-└── ...
-```
-
-- `app/main.py` にエントリーポイントを暫定実装。
-- `app/task.py` に Pydantic モデル（Schema）を分離。
-- 現時点では POST のみ対応しており、**Swagger UI での操作が主な確認手段**です。
-- ルーティングと処理ロジックが同居しており、SRP（単一責任の原則）には未対応です。
+├── .env                     # 環境変数ファイル（開発用）
+└── README.md
+</code></pre>
 
 ---
 
-## 🚀 実行方法（開発用）
+🚀 起動方法（ローカル開発）
 
-以下の手順でローカルサーバーを起動できます：
+1. 仮想環境を作成
 
-```bash
-# 仮想環境を有効化（例）
-source .venv/bin/activate
+python -m venv .venv
+source .venv/bin/activate  # Windowsでは .venv\Scripts\activate
 
-# 必要なライブラリをインストール
+2. 依存ライブラリをインストール
+
 pip install -r requirements.txt
 
-# 開発サーバー起動
-uvicorn app.main:app --reload
-```
+3. アプリケーションの起動
 
-- Swagger UI: http://localhost:8000/docs  
-- Redoc: http://localhost:8000/redoc
+uvicorn main:app --reload
 
----
+4. Swagger UI にアクセス
 
-## 🧱 今後の方針（ToDo）
-
-このプロジェクトはPoCとして、以下の構造への発展を想定しています：
-
-- [x] `task.py`：スキーマ（Pydanticモデル）の分離
-- [ ] `routers/`：APIルーティングモジュールの分離
-- [ ] `schemas/`：Pydanticモデルによる入出力定義の整理
-- [ ] `services/`：ビジネスロジックの抽象化
-- [ ] `repositories/`：DB操作の責任を分離（例：SQLAlchemyやDBライブラリの導入）
-- [ ] `di/`：依存性注入のインターフェイスと構成
-- [ ] 認証／認可（JWTやOAuth2）
-
-※「クリーンアーキテクチャ」や「ヘキサゴナルアーキテクチャ」などの原則を意識しつつ、現実的な段階的移行を目指します。
+http://127.0.0.1:8000/docs
 
 ---
 
-## 📝 補足
+🔧 使用技術スタック
 
-- このプロジェクトは学習用およびポートフォリオ目的で開発しています。
-- Djangoでの構築経験を活かし、FastAPIにおける設計と構造の試行錯誤を行っています。
+- Python 3.12+
+- FastAPI
+- SQLAlchemy 2.x
+- Pydantic v2
+- SQLite（開発用）
+- Uvicorn（ASGIサーバー）
 
 ---
 
-## 📚 参考リンク
+🧪 今後の展望（予定）
 
-- [FastAPI公式ドキュメント](https://fastapi.tiangolo.com/)
-- [Pydantic](https://docs.pydantic.dev/)
-- [Uvicorn](https://www.uvicorn.org/)
-- [Django版リポジトリ（参考）](https://github.com/ShigeoYugawa/learning-task-tracker)
+- PostgreSQL / Docker 対応
+- 認証機能の追加（JWT）
+- React 等のSPAフロントエンド連携
+- CI/CD環境（GitHub Actions など）
+- AWSなどクラウド上での公開
+- クリーンアーキテクチャへの発展的分割
+- PlantUMLでの依存関係図可視化
+
+---
+
+📄 ライセンス
+
+このプロジェクトは MIT ライセンスの下で公開されています。

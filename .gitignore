@@ -1,14 +1,41 @@
-# Python
+# Pythonキャッシュ
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
 
-# Virtual environment
+# 環境ファイル
+.env
+*.env
+
+# 仮想環境
 .venv/
+venv/
+ENV/
+env/
 
-# VSCode
+# エディタ/IDE
 .vscode/
+.idea/
+*.swp
 
-# OS
+# OS固有
 .DS_Store
 Thumbs.db
-__pycache__/
+
+# Alembic マイグレーション一時ファイル（任意）
+alembic/versions/*.pyc
+alembic/versions/__pycache__/
+
+# SQLite データベース（PoC用。将来のPostgreSQLでは除外可）
+*.sqlite3
+*.db
+
+# テスト出力/カバレッジ（必要なら）
+htmlcov/
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.pytest_cache/
