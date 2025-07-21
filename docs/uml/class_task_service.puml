@@ -28,16 +28,21 @@ package app {
       +done: bool
     }
 
-    class TaskRead {
+    class Task {
       +id: UUID
       +title: str
       +description: str
-      +done: Optional[bool]
+      +done: bool
+    }
+
+    class TaskResponse {
+      +message: str
+      +task: Task
     }
   }
 
   package db.models {
-    class Task {
+    class TaskModel {
       +id: str
       +title: str
       +description: str
@@ -46,10 +51,13 @@ package app {
   }
 }
 
-MainApp --> TaskRouter : include_router
+' 依存関係
+MainApp --> TaskRouter : include_router()
 TaskRouter --> TaskService : uses
-TaskService --> Task : ORM model
-TaskService --> TaskCreate : input
-TaskService --> TaskRead : output
+TaskService --> TaskModel : ORM操作
+TaskService --> TaskCreate : 入力DTO
+TaskService --> Task : 出力DTO
+Task --> TaskResponse : used in
+TaskModel --> Task : orm_mode による変換
 
 @enduml
