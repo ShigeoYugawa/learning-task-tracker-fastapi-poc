@@ -10,7 +10,7 @@ package app {
   }
 
   package routers {
-    class TaskRouter {
+    class TaskRouter <<module>> {
       +@router.post("/tasks/")
     }
   }
@@ -43,7 +43,7 @@ package app {
 
   package db.models {
     class TaskModel {
-      +id: str
+      +id: UUID
       +title: str
       +description: str
       +done: bool
@@ -57,7 +57,8 @@ TaskRouter --> TaskService : uses
 TaskService --> TaskModel : ORM操作
 TaskService --> TaskCreate : 入力DTO
 TaskService --> Task : 出力DTO
-Task --> TaskResponse : used in
-TaskModel --> Task : orm_mode による変換
+TaskService --> TaskResponse : return
+TaskResponse --> Task : has-a
+Task --> TaskModel : from_orm()
 
 @enduml
