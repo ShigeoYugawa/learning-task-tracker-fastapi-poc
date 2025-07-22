@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from uuid import UUID
 
 # --- 入力用スキーマ ---
-class TaskCreate(BaseModel):
+class TaskCreateSchema(BaseModel):
     """
     用途：新規タスク作成時にクライアントから送信されるJSONの構造を定義。
 
@@ -16,7 +16,7 @@ class TaskCreate(BaseModel):
     done: bool = False  # 完了フラグ（初期値 False）
 
 # --- レスポンス用スキーマ（タスク1件） ---
-class Task(BaseModel):
+class TaskSchema(BaseModel):
     """
     用途：DBから取得したタスクデータをJSONとしてクライアントに返す際の構造を定義。
 
@@ -31,7 +31,7 @@ class Task(BaseModel):
         orm_mode = True  # ORMモデル（SQLAlchemy）からの変換を許可
 
 # --- APIレスポンスラッパー ---
-class TaskResponse(BaseModel):
+class TaskResponseSchema(BaseModel):
     """
     用途：APIレスポンスを統一フォーマットで返すための構造。
     
@@ -39,7 +39,7 @@ class TaskResponse(BaseModel):
     Swagger UIでの表示も分かりやすくなる。
     """
     message: str  # API操作の結果メッセージ（例："Task created successfully"）
-    task: Task    # 実際に作成・取得されたタスクデータ（Taskスキーマ）
+    task: TaskSchema    # 実際に作成・取得されたタスクデータ（Taskスキーマ）
 
     class Config:
         orm_mode = True

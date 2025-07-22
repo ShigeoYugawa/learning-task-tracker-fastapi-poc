@@ -1,17 +1,17 @@
-# app/services/task_service.py
+# app/services/task_app_service.py
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import insert
-from app.schemas.task import TaskCreate, TaskRead
-from app.db.models.task import Task
+from app.schemas.task import TaskCreateSchema, TaskRead
+from app.db.models.task import TaskModel
 from sqlalchemy.future import select
 
-class TaskService:
+class TaskApplicationService:
     def __init__(self, db: AsyncSession):
         self.db = db
 
-    async def create_task(self, task_create: TaskCreate) -> TaskRead:
-        task = Task(
+    async def create_task(self, task_create: TaskCreateSchema) -> TaskRead:
+        task = TaskModel(
             title=task_create.title,
             description=task_create.description,
             done=task_create.done

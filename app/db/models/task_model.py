@@ -8,7 +8,7 @@ import uuid
 Base = declarative_base()
 
 # タスク情報を表すテーブル定義
-class Task(Base):
+class TaskModel(Base):
     __tablename__ = "tasks"  # テーブル名（DB上では "tasks" という名前で作成される）
 
     # 主キー：UUIDを文字列として使用（デフォルトで自動生成される）

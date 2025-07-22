@@ -14,35 +14,35 @@ package app {
   }
 
   package services {
-    class TaskService {
+    class TaskApplicationService {
       +create_task()
     }
   }
 
   package schemas {
-    class TaskCreate {
+    class TaskCreateSchema {
       +title: str
       +description: str
       +done: bool
     }
 
-    class Task {
+    class TaskSchema {
       +id: UUID
       +title: str
       +description: str
       +done: bool
     }
 
-    class TaskResponse {
+    class TaskResponseSchema {
       +message: str
-      +task: Task
+      +task: TaskSchema
     }
   }
 
   package db {
     package models {
       class TaskModel {
-        +id: UUID
+        +id: str
         +title: str
         +description: str
         +done: bool
@@ -60,21 +60,21 @@ package app {
 note right of task_router
   POST /tasks/
   prefix="/tasks"
-  response_model=TaskResponse
+  response_model=TaskResponseSchema
 end note
 
-' 依存関係はクラス名・モジュール名で指定（パッケージ名は書かない）
+' 依存関係（クラス名・モジュール名で指定）
 MainApp --> task_router : include_router()
-task_router --> TaskService : uses
-task_router --> TaskCreate : uses input schema
-task_router --> TaskResponse : uses output schema
-TaskService --> AsyncSessionManager : uses for DB session
-TaskService --> TaskModel : ORM操作
-TaskService --> TaskCreate : 入力DTO
-TaskService --> Task : 出力DTO
-TaskService --> TaskResponse : return
-TaskCreate --> Task : creates entity
-TaskResponse --> Task : has-a
-Task --> TaskModel : from_orm()
+task_router --> TaskApplicationService : uses
+task_router --> TaskCreateSchema : uses input schema
+task_router --> TaskResponseSchema : uses output schema
+TaskApplicationService --> AsyncSessionManager : uses for DB session
+TaskApplicationService --> TaskModel : ORM操作
+TaskApplicationService --> TaskCreateSchema : 入力DTO
+TaskApplicationService --> TaskSchema : 出力DTO
+TaskApplicationService --> TaskResponseSchema : return
+TaskCreateSchema --> TaskSchema : creates entity
+TaskResponseSchema --> TaskSchema : has-a
+TaskSchema --> TaskModel : from_orm()
 
 @enduml
