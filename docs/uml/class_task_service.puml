@@ -10,9 +10,7 @@ package app {
   }
 
   package routers {
-    class TaskRouter <<module>> {
-      +@router.post("/tasks/")
-    }
+    class task_router <<module>>
   }
 
   package services {
@@ -59,11 +57,17 @@ package app {
   }
 }
 
-' 依存関係はクラス名だけを使う（パッケージ名は書かない）
-MainApp --> TaskRouter : include_router()
-TaskRouter --> TaskService : uses
-TaskRouter --> TaskCreate : uses input schema
-TaskRouter --> TaskResponse : uses output schema
+note right of task_router
+  POST /tasks/
+  prefix="/tasks"
+  response_model=TaskResponse
+end note
+
+' 依存関係はクラス名・モジュール名で指定（パッケージ名は書かない）
+MainApp --> task_router : include_router()
+task_router --> TaskService : uses
+task_router --> TaskCreate : uses input schema
+task_router --> TaskResponse : uses output schema
 TaskService --> AsyncSessionManager : uses for DB session
 TaskService --> TaskModel : ORM操作
 TaskService --> TaskCreate : 入力DTO
