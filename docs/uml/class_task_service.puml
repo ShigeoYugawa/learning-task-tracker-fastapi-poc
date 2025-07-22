@@ -41,23 +41,35 @@ package app {
     }
   }
 
-  package db.models {
-    class TaskModel {
-      +id: UUID
-      +title: str
-      +description: str
-      +done: bool
+  package db {
+    package models {
+      class TaskModel {
+        +id: UUID
+        +title: str
+        +description: str
+        +done: bool
+      }
+    }
+
+    package session {
+      class AsyncSessionManager {
+        +get_db()
+      }
     }
   }
 }
 
-' 依存関係
+' 依存関係はクラス名だけを使う（パッケージ名は書かない）
 MainApp --> TaskRouter : include_router()
 TaskRouter --> TaskService : uses
+TaskRouter --> TaskCreate : uses input schema
+TaskRouter --> TaskResponse : uses output schema
+TaskService --> AsyncSessionManager : uses for DB session
 TaskService --> TaskModel : ORM操作
 TaskService --> TaskCreate : 入力DTO
 TaskService --> Task : 出力DTO
 TaskService --> TaskResponse : return
+TaskCreate --> Task : creates entity
 TaskResponse --> Task : has-a
 Task --> TaskModel : from_orm()
 
